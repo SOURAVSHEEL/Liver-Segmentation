@@ -1,0 +1,16 @@
+# Data 
+data/
+
+
+# Virtual Environment
+env-imgSeg/
+
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# IDEs
+.vscode/
+.idea/

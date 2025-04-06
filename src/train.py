@@ -1,40 +1,47 @@
-import os
 import torch
 import torch.nn as nn
 from tqdm import tqdm
 
-def train_model(model, dataloader, optimizer, criterion, device, epochs, train_logger, error_logger, save_dir="outputs/checkpoints"):
-    os.makedirs(save_dir, exist_ok=True)
-
+def train_model(model, train_loader, val_loader, epochs, lr, device, train_logger, error_logger):
     model.to(device)
+    criterion = nn.BCELoss()
+    optimizer = torch.optim.Adam(model.parameters(), lr=lr)
+
     train_logger.info(f"Model moved to {device}")
+    train_logger.info(f"Training started for {epochs} epochs")
 
     for epoch in range(epochs):
         model.train()
-        epoch_loss = 0.0
-        train_logger.info(f"Epoch {epoch+1}/{epochs} started")
+        epoch_loss = 0
+        for images, masks in tqdm(train_loader, desc=f"Epoch {epoch+1}/{epochs}"):
+            images, masks = images.to(device), masks.to(device).float().unsqueeze(1)
+            preds = model(images)
 
-        for i, data in enumerate(tqdm(dataloader, desc=f"Epoch {epoch+1}")):
-            try:
-                images, masks = data
-                images = images.to(device)
-                masks = masks.to(device).unsqueeze(1).float()
+            loss = criterion(preds, masks)
 
-                optimizer.zero_grad()
-                outputs = model(images)
-                loss = criterion(outputs, masks)
-                loss.backward()
-                optimizer.step()
+            optimizer.zero_grad()
+            loss.backward()
+            optimizer.step()
 
-                epoch_loss += loss.item()
+            epoch_loss += loss.item()
 
-            except Exception as e:
-                error_logger.error(f"Training error in batch {i}: {str(e)}")
+        avg_loss = epoch_loss / len(train_loader)
+        train_logger.info(f"Epoch [{epoch+1}/{epochs}] - Train Loss: {avg_loss:.4f}")
 
-        avg_loss = epoch_loss / len(dataloader)
-        train_logger.info(f"Epoch [{epoch+1}/{epochs}] completed. Avg Loss: {avg_loss:.4f}")
+        validate_model(model, val_loader, criterion, device, train_logger)
 
-        # Save model checkpoint
-        checkpoint_path = os.path.join(save_dir, f"unet_epoch{epoch+1}.pth")
-        torch.save(model.state_dict(), checkpoint_path)
-        train_logger.info(f"Checkpoint saved: {checkpoint_path}")
+    torch.save(model.state_dict(), "unet_segmentation_1.pth")
+    train_logger.info("Model training complete and saved successfully.")
+
+def validate_model(model, val_loader, criterion, device, logger):
+    model.eval()
+    val_loss = 0
+    with torch.no_grad():
+        for images, masks in val_loader:
+            images, masks = images.to(device), masks.to(device).float().unsqueeze(1)
+            preds = model(images)
+            loss = criterion(preds, masks)
+            val_loss += loss.item()
+
+    avg_val_loss = val_loss / len(val_loader)
+    logger.info(f"Validation Loss: {avg_val_loss:.4f}")

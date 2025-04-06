@@ -66,29 +66,29 @@ class LiverSegmentationDataset(Dataset):
 
 
 
-transforms = transforms.Compose([
-    transforms.Resize((256,256)),
-    transforms.ToTensor()
-])
+# transforms = transforms.Compose([
+#     transforms.Resize((256,256)),
+#     transforms.ToTensor()
+# ])
 
 
-### DATASET
+# ### DATASET
 
-dataset = LiverSegmentationDataset(
-    image_root="data/image",
-    mask_root="data/masks",
-    transform=transforms,
-    train_logger=train_logger,
-    error_logger=error_logger
-)
+# dataset = LiverSegmentationDataset(
+#     image_root="data/image",
+#     mask_root="data/masks",
+#     transform=transforms,
+#     train_logger=train_logger,
+#     error_logger=error_logger
+# )
 
-### DATALOADER
+# ### DATALOADER
 
 
-dataloader = DataLoader(
-    dataset=dataset,
-    batch_size=2,
-    shuffle=True
-)
+# dataloader = DataLoader(
+#     dataset=dataset,
+#     batch_size=2,
+#     shuffle=True
+# )
 
-train_logger.info(f"Dataloader initialized with {len(dataset)} samples and batch size 2.")
+# train_logger.info(f"Dataloader initialized with {len(dataset)} samples and batch size 2.")

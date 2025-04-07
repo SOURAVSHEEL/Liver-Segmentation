@@ -3,7 +3,7 @@ import logging
 from datetime import datetime
 
 
-def get_loggers(log_dir="outputs/logs"):
+def get_loggers(log_dir=r"outputs\logs"):
     os.makedirs(log_dir, exist_ok=True)
     timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
 

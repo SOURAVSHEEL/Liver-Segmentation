@@ -1,6 +1,10 @@
 import torch
 import torch.nn as nn
 from tqdm import tqdm
+from src.logs import get_loggers
+
+train_logger, error_logger = get_loggers()
+
 
 def train_model(model, train_loader, val_loader, epochs, lr, device, train_logger, error_logger):
     model.to(device)

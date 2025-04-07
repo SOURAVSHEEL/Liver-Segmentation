@@ -4,7 +4,7 @@ import json
 import logging
 import numpy as np
 from tqdm import tqdm
-from logs import *  
+from src.logs import *  
 
 # Get loggers
 train_logger, error_logger = get_loggers()

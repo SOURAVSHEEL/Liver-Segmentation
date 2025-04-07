@@ -1,8 +1,9 @@
 import torch
-from model import UNet
-from data_loader import get_dataloaders
-from train import train_model
-from logs import get_loggers
+# from dataset import *
+from src.data_loader import get_dataloaders
+from src.train import train_model
+from src.logs import get_loggers
+from src.Unet_model import model
 
 if __name__ == "__main__":
     train_logger, error_logger = get_loggers()
@@ -21,7 +22,7 @@ if __name__ == "__main__":
         IMAGE_ROOT, MASK_ROOT, BATCH_SIZE, train_logger, error_logger
     )
 
-    model = UNet(in_channels=3, out_channels=1)
+    # model = UNet(in_channels=3, out_channels=1)
     train_logger.info(f"Model structure:\n{model}")
 
     train_model(

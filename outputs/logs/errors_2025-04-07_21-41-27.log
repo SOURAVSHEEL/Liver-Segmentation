@@ -1,0 +1,6 @@
+2025-04-07 21:41:27,860 - ERROR - Failed to load sample to index 125: Unexpected type <class 'numpy.ndarray'>
+2025-04-07 21:41:27,860 - ERROR - Failed to load sample to index 125: Unexpected type <class 'numpy.ndarray'>
+2025-04-07 21:41:27,860 - ERROR - Failed to load sample to index 125: Unexpected type <class 'numpy.ndarray'>
+2025-04-07 21:41:27,879 - ERROR - Failed to load sample to index 135: Unexpected type <class 'numpy.ndarray'>
+2025-04-07 21:41:27,879 - ERROR - Failed to load sample to index 135: Unexpected type <class 'numpy.ndarray'>
+2025-04-07 21:41:27,879 - ERROR - Failed to load sample to index 135: Unexpected type <class 'numpy.ndarray'>

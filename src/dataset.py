@@ -4,13 +4,14 @@ import cv2
 import numpy as np
 from torch.utils.data import Dataset, DataLoader
 from torchvision import  transforms
-from logs import get_loggers
+from src.logs import get_loggers
+from PIL import Image
 
 train_logger, error_logger = get_loggers()
 
 class LiverSegmentationDataset(Dataset):
     def __init__(self,image_root, mask_root, transform=None,train_logger=None,error_logger=None):
-        self.image_root =  []
+        self.image_paths =  []
         self.mask_paths = []
         self.transform = transform
         self.train_logger = train_logger
@@ -47,19 +48,28 @@ class LiverSegmentationDataset(Dataset):
         return len(self.image_paths)
     
     def __getitem__(self, index):
-        try:
-            image = cv2.imread(self.image_paths[index])
-            image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+        image_path = self.image_paths[index]
+        mask_path = self.mask_paths[index]
 
-            mask = cv2.imread(self.mask_paths[index],cv2.IMREAD_GRAYSCALE)
+        image = cv2.imread(image_path)
+        mask = cv2.imread(mask_path, cv2.IMREAD_GRAYSCALE)
 
-            if self.transform:
-                image = self.transform(image)
-                mask = self.transform(mask)
-
-            return image, mask
-        
-        except Exception as e:
+        if image is None or mask is None:
             if self.error_logger:
-                self.error_logger.error(f"Failed to load sample to index {index}: {e}")
+                self.error_logger.error(f"Image or mask is None at index {index} -> Image: {image_path}, Mask: {mask_path}")
             return None
+
+        image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+
+        # Convert numpy arrays to PIL images
+        image = Image.fromarray(image)
+        mask = Image.fromarray(mask)
+
+        if self.transform:
+
+            image = self.transform(image)
+            mask = self.transform(mask)
+            mask = mask.squeeze(0)
+
+        return image, mask
+

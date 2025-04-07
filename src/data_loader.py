@@ -1,9 +1,14 @@
 import os
 import random
 from sklearn.model_selection import train_test_split
-from torch.utils.data import DataLoader, Subset
-from dataset import LiverSegmentationDataset
+from torch.utils.data import DataLoader, Subset,default_collate
+from src.dataset import LiverSegmentationDataset
 from torchvision import transforms
+
+def custom_collate_fn(batch):
+    # Remove None samples
+    batch = [sample for sample in batch if sample is not None]
+    return default_collate(batch)
 
 def get_dataloaders(image_root, mask_root, batch_size, train_logger, error_logger, val_split=0.2):
     transform = transforms.Compose([
@@ -25,8 +30,9 @@ def get_dataloaders(image_root, mask_root, batch_size, train_logger, error_logge
     train_dataset = Subset(full_dataset, train_idx)
     val_dataset = Subset(full_dataset, val_idx)
 
-    train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
-    val_loader = DataLoader(val_dataset, batch_size=batch_size, shuffle=False)
+    train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True,collate_fn=custom_collate_fn)
+    val_loader = DataLoader(val_dataset, batch_size=batch_size, shuffle=False,collate_fn=custom_collate_fn)
 
     train_logger.info(f"Dataset split into {len(train_idx)} training and {len(val_idx)} validation samples")
     return train_loader, val_loader
+

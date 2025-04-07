@@ -41,6 +41,10 @@ def validate_model(model, val_loader, criterion, device, logger):
     model.eval()
     val_loss = 0
     with torch.no_grad():
+        print(f"Predictions: min={preds.min().item():.4f}, max={preds.max().item():.4f}")
+        print(f"Masks: min={masks.min().item():.1f}, max={masks.max().item():.1f}")
+        print(f"Loss for batch: {loss.item():.6f}")
+
         for images, masks in val_loader:
             images, masks = images.to(device), masks.to(device).float().unsqueeze(1)
             preds = model(images)

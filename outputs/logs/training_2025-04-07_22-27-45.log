@@ -1,0 +1,84 @@
+2025-04-07 22:27:45,102 - INFO - Using device: cuda
+2025-04-07 22:27:45,111 - INFO - Loaded 735 samples from categories: ['Benign', 'Malignant', 'Normal']
+2025-04-07 22:27:45,113 - INFO - Dataset split into 588 training and 147 validation samples
+2025-04-07 22:27:45,113 - INFO - Model structure:
+UNet(
+  (pool): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+  (enc1): Sequential(
+    (0): Conv2d(3, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (1): ReLU(inplace=True)
+    (2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (3): ReLU(inplace=True)
+  )
+  (enc2): Sequential(
+    (0): Conv2d(64, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (1): ReLU(inplace=True)
+    (2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (3): ReLU(inplace=True)
+  )
+  (enc3): Sequential(
+    (0): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (1): ReLU(inplace=True)
+    (2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (3): ReLU(inplace=True)
+  )
+  (enc4): Sequential(
+    (0): Conv2d(256, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (1): ReLU(inplace=True)
+    (2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (3): ReLU(inplace=True)
+  )
+  (bottleneck): Sequential(
+    (0): Conv2d(512, 1024, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (1): ReLU(inplace=True)
+    (2): Conv2d(1024, 1024, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (3): ReLU(inplace=True)
+  )
+  (up4): ConvTranspose2d(1024, 512, kernel_size=(2, 2), stride=(2, 2))
+  (dec4): Sequential(
+    (0): Conv2d(1024, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (1): ReLU(inplace=True)
+    (2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (3): ReLU(inplace=True)
+  )
+  (up3): ConvTranspose2d(512, 256, kernel_size=(2, 2), stride=(2, 2))
+  (dec3): Sequential(
+    (0): Conv2d(512, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (1): ReLU(inplace=True)
+    (2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (3): ReLU(inplace=True)
+  )
+  (up2): ConvTranspose2d(256, 128, kernel_size=(2, 2), stride=(2, 2))
+  (dec2): Sequential(
+    (0): Conv2d(256, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (1): ReLU(inplace=True)
+    (2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (3): ReLU(inplace=True)
+  )
+  (up1): ConvTranspose2d(128, 64, kernel_size=(2, 2), stride=(2, 2))
+  (dec1): Sequential(
+    (0): Conv2d(128, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (1): ReLU(inplace=True)
+    (2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (3): ReLU(inplace=True)
+  )
+  (final): Conv2d(64, 1, kernel_size=(1, 1), stride=(1, 1))
+)
+2025-04-07 22:27:45,258 - INFO - Model moved to cuda
+2025-04-07 22:27:45,259 - INFO - Training started for 20 epochs
+2025-04-07 22:28:34,493 - INFO - Epoch [1/20] - Train Loss: 0.0527
+2025-04-07 22:28:39,342 - INFO - Validation Loss: 0.0000
+2025-04-07 22:29:25,994 - INFO - Epoch [2/20] - Train Loss: 0.0000
+2025-04-07 22:29:30,662 - INFO - Validation Loss: 0.0000
+2025-04-07 22:30:17,322 - INFO - Epoch [3/20] - Train Loss: 0.0000
+2025-04-07 22:30:21,974 - INFO - Validation Loss: 0.0000
+2025-04-07 22:31:10,589 - INFO - Epoch [4/20] - Train Loss: 0.0000
+2025-04-07 22:31:15,687 - INFO - Validation Loss: 0.0000
+2025-04-07 22:32:04,460 - INFO - Epoch [5/20] - Train Loss: 0.0000
+2025-04-07 22:32:09,227 - INFO - Validation Loss: 0.0000
+2025-04-07 22:32:57,333 - INFO - Epoch [6/20] - Train Loss: 0.0000
+2025-04-07 22:33:02,231 - INFO - Validation Loss: 0.0000
+2025-04-07 22:33:50,875 - INFO - Epoch [7/20] - Train Loss: 0.0000
+2025-04-07 22:33:55,611 - INFO - Validation Loss: 0.0000
+2025-04-07 22:34:42,546 - INFO - Epoch [8/20] - Train Loss: 0.0000
+2025-04-07 22:34:47,605 - INFO - Validation Loss: 0.0000
